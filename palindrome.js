@@ -7,6 +7,7 @@ function onlyAlphanumeric(str) {
 function reverseStr(s) {
   let splitString = s.split("");
   return splitString.reverse().join("");
+
 }
 
 function palindrome(aStr) {
