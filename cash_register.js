@@ -1,11 +1,13 @@
 function checkCashRegister(price, cash, cid) {
+    let myClonedArray = [] 
+    cid.map(val => myClonedArray.push(Object.assign([], val)));
 
+    
     function getCidSum(arr) {
         return arr.reduce(function(total, val){
         total += val[1];
         return total;
-    }, 0)
-}
+    }, 0)}
 
     cid = cid.reverse()
 
@@ -26,6 +28,7 @@ function checkCashRegister(price, cash, cid) {
     let cidSum = getCidSum(cid)
 
     if (cidSum < change) {
+        console.log('here');
         return {status: 'INSUFFICIENT_FUNDS', change: []}
     }
 
@@ -59,7 +62,10 @@ function checkCashRegister(price, cash, cid) {
             }
 
             i--;
-
+        }
+    }
+        
+            console.log(change);
             if (change === 0) {
                 
                 change = [];
@@ -67,18 +73,16 @@ function checkCashRegister(price, cash, cid) {
                 for (let i = 0; i < payback.length; i+=2) {
                     change.push(payback.slice(i, i+2));
                 }
-                console.log(getCidSum(cid))
+                
                 if (getCidSum(cid) === 0) {
-                    return {status: "CLOSED", change: change};
+                    return {status: "CLOSED", change: myClonedArray};
                 } else {
                     return {status: "OPEN", change: change};
                 }
-                
+            } else {
+                return {status: 'INSUFFICIENT_FUNDS', change: []}
+            }
         }
-        
-    }
-}
-}
 
 
-console.log(checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]));
+console.log(checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]));
